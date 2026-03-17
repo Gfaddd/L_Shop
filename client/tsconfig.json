@@ -19,6 +19,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
+    "jsx": "react-jsx",
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
