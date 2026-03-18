@@ -1,6 +1,10 @@
+import { useState } from 'react';
+import { AuthModal } from '../auth-modal';
 import './index.css';
 
 export const Header: React.FC = () => {
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+
   return (
     <header className="header">
       <div className="header__container">
@@ -17,7 +21,7 @@ export const Header: React.FC = () => {
         </div>
         
         <div className="header__actions">
-          <button className="header__btn">
+          <button className="header__btn" onClick={() => setIsAuthOpen(true)}>
             <span>Аккаунт</span>
           </button>
           <button className="header__btn">
@@ -25,6 +29,8 @@ export const Header: React.FC = () => {
           </button>
         </div>
       </div>
+
+      <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
     </header>
   );
 };
