@@ -1,0 +1,92 @@
+[
+  {
+    "id": "1",
+    "email": "ivanov@example.com",
+    "password": "hashed_password_1",
+    "name": "Иван Иванов",
+    "phone": "+7 999 123-45-67",
+    "address": "г. Москва, ул. Ленина, д. 10, кв. 5",
+    "createdAt": "2024-01-15T10:00:00Z"
+  },
+  {
+    "id": "2",
+    "email": "petrova@example.com",
+    "password": "hashed_password_2",
+    "name": "Мария Петрова",
+    "phone": "+7 999 234-56-78",
+    "address": "г. Санкт-Петербург, Невский пр., д. 25",
+    "createdAt": "2024-02-20T14:30:00Z"
+  },
+  {
+    "id": "3",
+    "email": "sidorov@example.com",
+    "password": "hashed_password_3",
+    "name": "Алексей Сидоров",
+    "phone": "+7 999 345-67-89",
+    "address": "г. Екатеринбург, ул. Мира, д. 15",
+    "createdAt": "2024-03-10T09:15:00Z"
+  },
+  {
+    "id": "4",
+    "email": "kuznetsova@example.com",
+    "password": "hashed_password_4",
+    "name": "Елена Кузнецова",
+    "phone": "+7 999 456-78-90",
+    "address": "г. Новосибирск, ул. Красная, д. 30",
+    "createdAt": "2024-03-25T16:45:00Z"
+  },
+  {
+    "id": "5",
+    "email": "smirnov@example.com",
+    "password": "hashed_password_5",
+    "name": "Дмитрий Смирнов",
+    "phone": "+7 999 567-89-01",
+    "address": "г. Казань, ул. Пушкина, д. 8",
+    "createdAt": "2024-04-05T11:20:00Z"
+  },
+  {
+    "id": "6",
+    "email": "volkova@example.com",
+    "password": "hashed_password_6",
+    "name": "Анна Волкова",
+    "phone": "+7 999 678-90-12",
+    "address": "г. Нижний Новгород, ул. Советская, д. 42",
+    "createdAt": "2024-04-18T13:00:00Z"
+  },
+  {
+    "id": "7",
+    "email": "fedorov@example.com",
+    "password": "hashed_password_7",
+    "name": "Сергей Федоров",
+    "phone": "+7 999 789-01-23",
+    "address": "г. Челябинск, ул. Кирова, д. 18",
+    "createdAt": "2024-05-02T10:30:00Z"
+  },
+  {
+    "id": "8",
+    "email": "morozova@example.com",
+    "password": "hashed_password_8",
+    "name": "Ольга Морозова",
+    "phone": "+7 999 890-12-34",
+    "address": "г. Омск, ул. Ленина, д. 55",
+    "createdAt": "2024-05-20T15:10:00Z"
+  },
+  {
+    "id": "9",
+    "email": "andreev@example.com",
+    "password": "hashed_password_9",
+    "name": "Павел Андреев",
+    "phone": "+7 999 901-23-45",
+    "address": "г. Самара, ул. Чапаева, д. 22",
+    "createdAt": "2024-06-08T09:45:00Z"
+  },
+  {
+    "id": "10",
+    "email": "zaitseva@example.com",
+    "password": "hashed_password_10",
+    "name": "Наталья Зайцева",
+    "phone": "+7 999 012-34-56",
+    "address": "г. Ростов-на-Дону, ул. Буденновская, д. 35",
+    "createdAt": "2024-06-25T14:20:00Z"
+  }
+]

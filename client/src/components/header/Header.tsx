@@ -24,8 +24,9 @@ export const Header: React.FC = () => {
           <button className="header__btn" onClick={() => setIsAuthOpen(true)}>
             <span>Аккаунт</span>
           </button>
-          <button className="header__btn">
+          <button className="header__btn header__btn_cart">
             <span>Корзина</span>
+            <span className="header__cart-count">0</span>
           </button>
         </div>
       </div>

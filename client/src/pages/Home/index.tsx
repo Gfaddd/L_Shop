@@ -1,20 +1,32 @@
+import { useState, useEffect } from 'react';
 import { Header } from '../../components/header';
 import { ProductCard } from '../../components/product-card';
+import { productsApi } from '../../api/products.api';
 import type { Product } from '../../types/product';
 import './index.css';
 
-const mockProducts: Product[] = [
-  { id: '1', name: 'Надувной матрас "Wave"', description: 'Двухместный надувной матрас с подголовниками', price: 2990, category: 'Матрасы', inStock: true },
-  { id: '2', name: 'Круг надувной "Sea"', description: 'Диаметр 100 см, яркий дизайн', price: 890, category: 'Круги', inStock: true },
-  { id: '3', name: 'Бассейн надувной 305 см', description: 'Семейный бассейн с лестницей', price: 8990, category: 'Бассейны', inStock: true },
-  { id: '4', name: 'Водный пистолет "Aqua Blast"', description: 'С дальностью стрельбы до 8 метров', price: 1490, category: 'Оружие водное', inStock: false },
-  { id: '5', name: 'Надувная лодка "Dolphin"', description: 'Для 2 человек, с веслами', price: 4990, category: 'Лодки', inStock: true },
-  { id: '6', name: 'Очки для плавания', description: 'Антизапотевающие, герметичные', price: 590, category: 'Аксессуары', inStock: true },
-  { id: '7', name: 'Ласты детские', description: 'Размер S, яркие цвета', price: 390, category: 'Аксессуары', inStock: true },
-  { id: '8', name: 'Надувной плот "River"', description: 'Для 4 человек, с моторным креплением', price: 12990, category: 'Плоты', inStock: false },
-];
-
 export const Home: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const response = await productsApi.getAll();
+        setProducts(response.data);
+      } catch (err) {
+        setError('Не удалось загрузить товары');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <div className="home">
       <Header />
@@ -55,14 +67,20 @@ export const Home: React.FC = () => {
         <section className="home__content">
           <div className="home__products-header">
             <h1>Все товары</h1>
-            <span>Найдено: {mockProducts.length} товаров</span>
+            <span>Найдено: {products.length} товаров</span>
           </div>
           
-          <div className="home__products-grid">
-            {mockProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          {loading ? (
+            <div className="home__loading">Загрузка...</div>
+          ) : error ? (
+            <div className="home__error">{error}</div>
+          ) : (
+            <div className="home__products-grid">
+              {products.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
         </section>
       </main>
     </div>
