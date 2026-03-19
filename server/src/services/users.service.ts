@@ -1,7 +1,9 @@
+import bcrypt from 'bcryptjs';
 import { User } from '../types';
 import { readJsonFile, writeJsonFile, generateId, getCurrentTimestamp } from '../utils/helpers';
 
 const USERS_FILE = 'users.json';
+const SALT_ROUNDS = 10;
 
 export const getAllUsers = (): User[] => {
   return readJsonFile<User>(USERS_FILE);
@@ -17,13 +19,30 @@ export const getUserByEmail = (email: string): User | undefined => {
   return users.find(u => u.email.toLowerCase() === email.toLowerCase());
 };
 
-export const createUser = (user: Omit<User, 'id' | 'createdAt'>): User => {
+export const getUserByPhone = (phone: string): User | undefined => {
   const users = getAllUsers();
+  return users.find(u => u.phone === phone);
+};
+
+export const getUserByEmailOrPhone = (login: string): User | undefined => {
+  const users = getAllUsers();
+  return users.find(u => 
+    u.email.toLowerCase() === login.toLowerCase() || 
+    u.phone === login
+  );
+};
+
+export const createUser = async (user: Omit<User, 'id' | 'createdAt'>): Promise<User> => {
+  const users = getAllUsers();
+  const hashedPassword = await bcrypt.hash(user.password, SALT_ROUNDS);
+  
   const newUser: User = {
     ...user,
+    password: hashedPassword,
     id: generateId(),
     createdAt: getCurrentTimestamp()
   };
+  
   users.push(newUser);
   writeJsonFile(USERS_FILE, users);
   return newUser;
@@ -54,10 +73,16 @@ export const deleteUser = (id: string): boolean => {
   return true;
 };
 
-export const authenticateUser = (email: string, password: string): User | null => {
-  const user = getUserByEmail(email);
-  if (user && user.password === password) {
+export const authenticateUser = async (login: string, password: string): Promise<User | null> => {
+  const user = getUserByEmailOrPhone(login);
+  if (!user) {
+    return null;
+  }
+  
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (isPasswordValid) {
     return user;
   }
+  
   return null;
 };

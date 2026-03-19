@@ -134,6 +134,21 @@
   background-color: #0056b3;
 }
 
+.auth-modal__submit:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.auth-modal__error {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  text-align: center;
+}
+
 .auth-modal__toggle {
   width: 100%;
   padding: 14px;

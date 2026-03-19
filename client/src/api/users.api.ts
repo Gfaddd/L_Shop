@@ -16,7 +16,8 @@ export interface CreateUserRequest {
 
 export interface UserResponse {
   success: boolean;
-  data: Omit<User, 'password'>;
+  data?: Omit<User, 'password'>;
+  error?: string;
 }
 
 export interface UsersListResponse {

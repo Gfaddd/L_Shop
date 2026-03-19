@@ -1,32 +1,83 @@
 import { useState, type FormEvent } from 'react';
 import './index.css';
+import { usersApi } from '../../api/users.api';
+import type { User } from '../../types/user';
 
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onAuthSuccess?: (user: Omit<User, 'password'>) => void;
 }
 
 type LoginMethod = 'phone' | 'email';
 type ModalMode = 'login' | 'register';
 
-export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
+export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess }) => {
   const [mode, setMode] = useState<ModalMode>('login');
   const [loginMethod, setLoginMethod] = useState<LoginMethod>('email');
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: FormEvent): void => {
+  const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
+    setError('');
     
     if (mode === 'register') {
       if (password !== confirmPassword) {
-        alert('Пароли не совпадают');
+        setError('Пароли не совпадают');
         return;
       }
-      console.log('Register:', { loginMethod, login, password });
+      
+      setIsLoading(true);
+      try {
+        const userData = {
+          email: login,
+          password,
+          name,
+          phone,
+          address
+        };
+        
+        const response = await usersApi.create(userData);
+        
+        if (response.success && response.data) {
+          localStorage.setItem('authToken', 'mock-token');
+          localStorage.setItem('user', JSON.stringify(response.data));
+          onAuthSuccess?.(response.data);
+          onClose();
+        } else {
+          setError(response.error || 'Ошибка при регистрации');
+        }
+      } catch (err) {
+        setError('Ошибка при регистрации. Попробуйте позже.');
+      } finally {
+        setIsLoading(false);
+      }
     } else {
-      console.log('Login:', { loginMethod, login, password });
+      setIsLoading(true);
+      try {
+        const response = await usersApi.login({
+          email: login,
+          password
+        });
+        
+        if (response.success && response.data) {
+          onAuthSuccess?.(response.data);
+          onClose();
+        } else {
+          setError(response.error || 'Ошибка при входе');
+        }
+      } catch (err) {
+        setError('Ошибка при входе. Проверьте email и пароль.');
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -54,28 +105,30 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         </h2>
 
         <form onSubmit={handleSubmit}>
-          <div className="auth-modal__radio-group">
-            <label className="auth-modal__radio-label">
-              <input
-                type="radio"
-                name="loginMethod"
-                value="email"
-                checked={loginMethod === 'email'}
-                onChange={() => setLoginMethod('email')}
-              />
-              Электронная почта
-            </label>
-            <label className="auth-modal__radio-label">
-              <input
-                type="radio"
-                name="loginMethod"
-                value="phone"
-                checked={loginMethod === 'phone'}
-                onChange={() => setLoginMethod('phone')}
-              />
-              Номер телефона
-            </label>
-          </div>
+          {mode === 'login' && (
+            <div className="auth-modal__radio-group">
+              <label className="auth-modal__radio-label">
+                <input
+                  type="radio"
+                  name="loginMethod"
+                  value="email"
+                  checked={loginMethod === 'email'}
+                  onChange={() => setLoginMethod('email')}
+                />
+                Электронная почта
+              </label>
+              <label className="auth-modal__radio-label">
+                <input
+                  type="radio"
+                  name="loginMethod"
+                  value="phone"
+                  checked={loginMethod === 'phone'}
+                  onChange={() => setLoginMethod('phone')}
+                />
+                Номер телефона
+              </label>
+            </div>
+          )}
 
           <div className="auth-modal__field">
             <label htmlFor="login">
@@ -104,17 +157,55 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           </div>
 
           {mode === 'register' && (
-            <div className="auth-modal__field">
-              <label htmlFor="confirmPassword">Подтверждение пароля</label>
-              <input
-                id="confirmPassword"
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Повторите пароль"
-                required
-              />
-            </div>
+            <>
+              <div className="auth-modal__field">
+                <label htmlFor="name">Имя</label>
+                <input
+                  id="name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Ваше имя"
+                  required
+                />
+              </div>
+              
+              <div className="auth-modal__field">
+                <label htmlFor="phone">Телефон</label>
+                <input
+                  id="phone"
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="+375 (00) 000-00-00"
+                  required
+                />
+              </div>
+              
+              <div className="auth-modal__field">
+                <label htmlFor="address">Адрес</label>
+                <input
+                  id="address"
+                  type="text"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="Ваш адрес"
+                  required
+                />
+              </div>
+              
+              <div className="auth-modal__field">
+                <label htmlFor="confirmPassword">Подтверждение пароля</label>
+                <input
+                  id="confirmPassword"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Повторите пароль"
+                  required
+                />
+              </div>
+            </>
           )}
 
           {mode === 'login' && (
@@ -125,8 +216,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             </div>
           )}
 
-          <button type="submit" className="auth-modal__submit">
-            {mode === 'login' ? 'Войти' : 'Зарегистрироваться'}
+          {error && (
+            <div className="auth-modal__error">
+              {error}
+            </div>
+          )}
+
+          <button type="submit" className="auth-modal__submit" disabled={isLoading}>
+            {isLoading ? 'Загрузка...' : (mode === 'login' ? 'Войти' : 'Зарегистрироваться')}
           </button>
 
           <button

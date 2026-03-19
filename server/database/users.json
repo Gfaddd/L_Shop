@@ -88,5 +88,14 @@
     "phone": "+7 999 012-34-56",
     "address": "г. Ростов-на-Дону, ул. Буденновская, д. 35",
     "createdAt": "2024-06-25T14:20:00Z"
+  },
+  {
+    "email": "test@gmail.com",
+    "password": "$2b$10$CunObIzXuQIn68UxAKNG8..PxvFvYmHR71IrrnrTBlR06pBvi83Oi",
+    "name": "Oleg",
+    "phone": "+375291234567",
+    "address": "Ул. Пушкина д.5",
+    "id": "mmxv3ar7kngx4xmhuf",
+    "createdAt": "2026-03-19T19:27:07.315Z"
   }
 ]

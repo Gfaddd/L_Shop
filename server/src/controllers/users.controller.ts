@@ -47,7 +47,7 @@ export const getUserById = (req: Request, res: Response): void => {
   }
 };
 
-export const createUser = (req: Request, res: Response): void => {
+export const createUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const userData = req.body as Omit<User, 'id' | 'createdAt'>;
     
@@ -60,7 +60,7 @@ export const createUser = (req: Request, res: Response): void => {
       return;
     }
     
-    const user = usersService.createUser(userData);
+    const user = await usersService.createUser(userData);
     
     const { password, ...userWithoutPassword } = user;
     
@@ -132,19 +132,19 @@ export const deleteUser = (req: Request, res: Response): void => {
   }
 };
 
-export const login = (req: Request, res: Response): void => {
+export const login = async (req: Request, res: Response): Promise<void> => {
   try {
     const { email, password } = req.body;
     
     if (!email || !password) {
       res.status(400).json({
         success: false,
-        error: 'Email и пароль обязательны'
+        error: 'Email/телефон и пароль обязательны'
       });
       return;
     }
     
-    const user = usersService.authenticateUser(email, password);
+    const user = await usersService.authenticateUser(email, password);
     
     if (!user) {
       res.status(401).json({
