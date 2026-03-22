@@ -97,5 +97,14 @@
     "address": "Ул. Пушкина д.5",
     "id": "mmxv3ar7kngx4xmhuf",
     "createdAt": "2026-03-19T19:27:07.315Z"
+  },
+  {
+    "email": "qwe@gmail.com",
+    "password": "$2b$10$5w0c2GsT7qSTNQE01cX.9eZipxv3iOC0T57TMMoT4Z06oREXvgt3G",
+    "name": "qqq",
+    "phone": "123123123123",
+    "address": "qweqweqwe",
+    "id": "mn1y7urqbp6kaggg3d9",
+    "createdAt": "2026-03-22T16:05:43.430Z"
   }
 ]

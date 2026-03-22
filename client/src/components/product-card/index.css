@@ -72,3 +72,26 @@
   background-color: #f8d7da;
   color: #721c24;
 }
+
+.product-card__add-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.product-card__add-btn:hover:not(:disabled) {
+  background-color: #45a049;
+}
+
+.product-card__add-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

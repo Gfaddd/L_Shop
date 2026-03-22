@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import type { Product } from '../../types/product';
+import { basketApi } from '../../api/basket.api';
+import { usersApi } from '../../api/users.api';
 import './index.css';
 
 interface ProductCardProps {
@@ -6,6 +9,27 @@ interface ProductCardProps {
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const [adding, setAdding] = useState(false);
+
+  const handleAddToCart = async () => {
+    const user = usersApi.getCurrentUser();
+    if (!user) {
+      alert('Войдите в аккаунт, чтобы добавить товар в корзину');
+      return;
+    }
+
+    try {
+      setAdding(true);
+      await basketApi.addItem(user.id, product.id, 1);
+      alert('Товар добавлен в корзину');
+      window.dispatchEvent(new Event('cartUpdated'));
+    } catch (err) {
+      alert('Не удалось добавить товар в корзину');
+    } finally {
+      setAdding(false);
+    }
+  };
+
   return (
     <div className="product-card">
       <div className="product-card__image">
@@ -25,6 +49,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             {product.inStock ? 'В наличии' : 'Нет в наличии'}
           </span>
         </div>
+        <button 
+          className="product-card__add-btn" 
+          onClick={handleAddToCart}
+          disabled={!product.inStock || adding}
+        >
+          {adding ? 'Добавляю...' : 'В корзину'}
+        </button>
       </div>
     </div>
   );
