@@ -16,7 +16,10 @@ export const getProductsWithFilters = (params: ProductQueryParams): { products: 
   let products = getAllProducts();
 
   if (params.category) {
-    products = products.filter(p => p.category.toLowerCase() === params.category?.toLowerCase());
+    const categories = Array.isArray(params.category) ? params.category : [params.category];
+    products = products.filter(p => 
+      categories.some(c => p.category.toLowerCase() === c.toLowerCase())
+    );
   }
 
   if (params.minPrice !== undefined) {
@@ -34,8 +37,7 @@ export const getProductsWithFilters = (params: ProductQueryParams): { products: 
   if (params.search) {
     const searchLower = params.search.toLowerCase();
     products = products.filter(p => 
-      p.name.toLowerCase().includes(searchLower) || 
-      p.description.toLowerCase().includes(searchLower)
+      p.name.toLowerCase().includes(searchLower)
     );
   }
 

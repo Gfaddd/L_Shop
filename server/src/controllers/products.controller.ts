@@ -5,7 +5,7 @@ import * as productsService from '../services/products.service';
 export const getAllProducts = (req: Request, res: Response): void => {
   try {
     const params: ProductQueryParams = {
-      category: req.query.category as string,
+      category: req.query.category as string | string[],
       minPrice: req.query.minPrice ? Number(req.query.minPrice) : undefined,
       maxPrice: req.query.maxPrice ? Number(req.query.maxPrice) : undefined,
       inStock: req.query.inStock ? req.query.inStock === 'true' : undefined,

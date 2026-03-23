@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { AuthModal } from '../auth-modal';
 import { usersApi } from '../../api/users.api';
 import { basketApi } from '../../api/basket.api';
@@ -10,7 +10,9 @@ export const Header: React.FC = () => {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState<Omit<User, 'password'> | null>(null);
   const [cartCount, setCartCount] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState(searchParams.get('search') || '');
 
   useEffect(() => {
     const user = usersApi.getCurrentUser();
@@ -65,6 +67,35 @@ export const Header: React.FC = () => {
     setCurrentUser(null);
   };
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const currentParams = new URLSearchParams(searchParams);
+      if (searchValue.trim()) {
+        currentParams.set('search', searchValue.trim());
+      } else {
+        currentParams.delete('search');
+      }
+      currentParams.delete('category');
+      currentParams.delete('minPrice');
+      currentParams.delete('maxPrice');
+      currentParams.delete('inStock');
+      setSearchParams(currentParams);
+      if (window.location.pathname !== '/') {
+        navigate('/');
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchValue, searchParams, setSearchParams, navigate]);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
     <header className="header">
       <div className="header__container">
@@ -72,13 +103,15 @@ export const Header: React.FC = () => {
           <span>L-Shop</span>
         </div>
         
-        <div className="header__search">
+        <form className="header__search" onSubmit={handleSearchSubmit}>
           <input 
             type="text" 
             placeholder="Поиск товаров..." 
             className="header__search-input"
+            value={searchValue}
+            onChange={handleSearchChange}
           />
-        </div>
+        </form>
         
         <div className="header__actions">
           {currentUser ? (

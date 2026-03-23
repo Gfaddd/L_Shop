@@ -2,7 +2,7 @@ import api from './api';
 import type { Product } from '../types/product';
 
 export interface ProductQueryParams {
-  category?: string;
+  category?: string | string[];
   minPrice?: number;
   maxPrice?: number;
   inStock?: boolean;

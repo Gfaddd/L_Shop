@@ -32,7 +32,7 @@ export interface Basket {
 }
 
 export interface ProductQueryParams {
-  category?: string;
+  category?: string | string[];
   minPrice?: number;
   maxPrice?: number;
   inStock?: boolean;
