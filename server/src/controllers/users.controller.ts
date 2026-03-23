@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { User } from '../types';
+import { User, Order, OrderItem } from '../types';
 import * as usersService from '../services/users.service';
+import * as productsService from '../services/products.service';
 
 export const getAllUsers = (req: Request, res: Response): void => {
   try {
@@ -49,7 +50,7 @@ export const getUserById = (req: Request, res: Response): void => {
 
 export const createUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userData = req.body as Omit<User, 'id' | 'createdAt'>;
+    const userData = req.body as Omit<User, 'id' | 'createdAt' | 'orderHistory'>;
     
     const existingUser = usersService.getUserByEmail(userData.email);
     if (existingUser) {
@@ -82,6 +83,7 @@ export const updateUser = (req: Request, res: Response): void => {
     const updates = req.body;
     
     delete updates.password;
+    delete updates.orderHistory;
     
     const user = usersService.updateUser(id, updates);
     
@@ -164,6 +166,102 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     res.status(500).json({
       success: false,
       error: 'Не удалось войти'
+    });
+  }
+};
+
+export const addOrder = (req: Request, res: Response): void => {
+  try {
+    const { id } = req.params;
+    const { items, totalAmount } = req.body as { items: OrderItem[]; totalAmount: number };
+    
+    const user = usersService.getUserById(id);
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        error: 'Пользователь не найден'
+      });
+      return;
+    }
+
+    const orderItems: OrderItem[] = items.map((item) => {
+      const product = productsService.getProductById(item.productId);
+      return {
+        productId: item.productId,
+        quantity: item.quantity,
+        price: product?.price || 0
+      };
+    });
+
+    const order = usersService.addOrderToHistory(id, {
+      items: orderItems,
+      totalAmount,
+      status: 'completed'
+    });
+
+    if (!order) {
+      res.status(500).json({
+        success: false,
+        error: 'Не удалось создать заказ'
+      });
+      return;
+    }
+
+    res.json({
+      success: true,
+      data: order
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Не удалось создать заказ'
+    });
+  }
+};
+
+export const getOrderHistory = (req: Request, res: Response): void => {
+  try {
+    const { id } = req.params;
+    
+    const user = usersService.getUserById(id);
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        error: 'Пользователь не найден'
+      });
+      return;
+    }
+
+    const ordersWithProducts = user.orderHistory.map((order) => {
+      const itemsWithProducts = order.items.map((item) => {
+        const product = productsService.getProductById(item.productId);
+        return {
+          ...item,
+          product: product ? {
+            id: product.id,
+            name: product.name,
+            description: product.description,
+            price: product.price,
+            category: product.category,
+            inStock: product.inStock,
+            image: product.image
+          } : undefined
+        };
+      });
+      return {
+        ...order,
+        items: itemsWithProducts
+      };
+    });
+
+    res.json({
+      success: true,
+      data: ordersWithProducts
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Не удалось получить историю заказов'
     });
   }
 };

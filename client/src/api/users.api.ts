@@ -1,5 +1,6 @@
 import api from './api';
 import type { User } from '../types/user';
+import type { Order } from '../types/order';
 
 export interface LoginRequest {
   email: string;
@@ -14,6 +15,13 @@ export interface CreateUserRequest {
   address: string;
 }
 
+export interface UpdateUserRequest {
+  name?: string;
+  phone?: string;
+  address?: string;
+  email?: string;
+}
+
 export interface UserResponse {
   success: boolean;
   data?: Omit<User, 'password'>;
@@ -23,6 +31,22 @@ export interface UserResponse {
 export interface UsersListResponse {
   success: boolean;
   data: Omit<User, 'password'>[];
+}
+
+export interface OrderRequest {
+  items: { productId: string; quantity: number }[];
+  totalAmount: number;
+}
+
+export interface OrderResponse {
+  success: boolean;
+  data?: Order;
+  error?: string;
+}
+
+export interface OrderHistoryResponse {
+  success: boolean;
+  data: Order[];
 }
 
 export const usersApi = {
@@ -50,8 +74,11 @@ export const usersApi = {
     return response.data;
   },
 
-  update: async (id: string, updates: Partial<User>): Promise<UserResponse> => {
+  update: async (id: string, updates: UpdateUserRequest): Promise<UserResponse> => {
     const response = await api.put<UserResponse>(`/api/users/${id}`, updates);
+    if (response.data.success && response.data.data) {
+      localStorage.setItem('user', JSON.stringify(response.data.data));
+    }
     return response.data;
   },
 
@@ -71,6 +98,16 @@ export const usersApi = {
       return JSON.parse(userStr);
     }
     return null;
+  },
+
+  createOrder: async (userId: string, orderData: OrderRequest): Promise<OrderResponse> => {
+    const response = await api.post<OrderResponse>(`/api/users/${userId}/orders`, orderData);
+    return response.data;
+  },
+
+  getOrderHistory: async (userId: string): Promise<OrderHistoryResponse> => {
+    const response = await api.get<OrderHistoryResponse>(`/api/users/${userId}/orders`);
+    return response.data;
   }
 };
 

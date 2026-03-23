@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import { User } from '../types';
+import { User, Order } from '../types';
 import { readJsonFile, writeJsonFile, generateId, getCurrentTimestamp } from '../utils/helpers';
 
 const USERS_FILE = 'users.json';
@@ -32,7 +32,7 @@ export const getUserByEmailOrPhone = (login: string): User | undefined => {
   );
 };
 
-export const createUser = async (user: Omit<User, 'id' | 'createdAt'>): Promise<User> => {
+export const createUser = async (user: Omit<User, 'id' | 'createdAt' | 'orderHistory'>): Promise<User> => {
   const users = getAllUsers();
   const hashedPassword = await bcrypt.hash(user.password, SALT_ROUNDS);
   
@@ -40,7 +40,8 @@ export const createUser = async (user: Omit<User, 'id' | 'createdAt'>): Promise<
     ...user,
     password: hashedPassword,
     id: generateId(),
-    createdAt: getCurrentTimestamp()
+    createdAt: getCurrentTimestamp(),
+    orderHistory: []
   };
   
   users.push(newUser);
@@ -85,4 +86,33 @@ export const authenticateUser = async (login: string, password: string): Promise
   }
   
   return null;
+};
+
+export const addOrderToHistory = (userId: string, order: Omit<Order, 'id' | 'createdAt' | 'userId'>): Order | null => {
+  const users = getAllUsers();
+  const userIndex = users.findIndex(u => u.id === userId);
+  
+  if (userIndex === -1) {
+    return null;
+  }
+
+  const newOrder: Order = {
+    ...order,
+    id: generateId(),
+    userId,
+    createdAt: getCurrentTimestamp()
+  };
+
+  if (!users[userIndex].orderHistory) {
+    users[userIndex].orderHistory = [];
+  }
+  
+  users[userIndex].orderHistory.unshift(newOrder);
+  writeJsonFile(USERS_FILE, users);
+  return newOrder;
+};
+
+export const getUserOrderHistory = (userId: string): Order[] => {
+  const user = getUserById(userId);
+  return user?.orderHistory || [];
 };

@@ -1,3 +1,5 @@
+import type { Order } from "./order";
+
 export interface User {
   id: string;
   email: string;
@@ -6,4 +8,5 @@ export interface User {
   phone: string;
   address: string;
   createdAt: string;
+  orderHistory: Order[];
 }

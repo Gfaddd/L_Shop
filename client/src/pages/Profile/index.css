@@ -1,0 +1,395 @@
+.profile-page {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 24px;
+}
+
+.profile-page__container {
+  display: flex;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.profile-page__sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  height: fit-content;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.profile-page__avatar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.profile-page__avatar-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 600;
+  color: white;
+}
+
+.profile-page__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile-page__nav-link {
+  display: block;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: #666;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.profile-page__nav-link:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.profile-page__nav-link_active {
+  background-color: #667eea;
+  color: white;
+}
+
+.profile-page__nav-link_active:hover {
+  background-color: #5568d3;
+  color: white;
+}
+
+.profile-page__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-page__section {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.profile-page__section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.profile-page__title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.profile-page__subtitle {
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 20px 0;
+}
+
+.profile-page__btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.profile-page__btn_edit {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.profile-page__btn_edit:hover {
+  background-color: #e0e0e0;
+}
+
+.profile-page__btn_save {
+  background-color: #4caf50;
+  color: white;
+}
+
+.profile-page__btn_save:hover {
+  background-color: #43a047;
+}
+
+.profile-page__btn_cancel {
+  background-color: #f0f0f0;
+  color: #333;
+  margin-left: 8px;
+}
+
+.profile-page__btn_cancel:hover {
+  background-color: #e0e0e0;
+}
+
+.profile-page__btn_primary {
+  background-color: #667eea;
+  color: white;
+}
+
+.profile-page__btn_primary:hover {
+  background-color: #5568d3;
+}
+
+.profile-page__success {
+  padding: 12px 16px;
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.profile-page__error {
+  padding: 12px 16px;
+  background-color: #ffebee;
+  color: #c62828;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.profile-page__info-card {
+  background-color: #fafafa;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.profile-page__card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 20px 0;
+}
+
+.profile-page__details {
+  display: grid;
+  gap: 16px;
+}
+
+.profile-page__detail {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.profile-page__detail:last-child {
+  border-bottom: none;
+}
+
+.profile-page__detail-label {
+  color: #666;
+  font-weight: 500;
+}
+
+.profile-page__detail-value {
+  color: #333;
+  text-align: right;
+}
+
+.profile-page__form {
+  display: grid;
+  gap: 16px;
+}
+
+.profile-page__form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.profile-page__label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+}
+
+.profile-page__input {
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.profile-page__input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.profile-page__form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.profile-page__empty {
+  text-align: center;
+  padding: 48px 24px;
+  color: #666;
+}
+
+.profile-page__empty p {
+  margin: 0 0 20px 0;
+  font-size: 16px;
+}
+
+.profile-page__loading {
+  text-align: center;
+  padding: 48px 24px;
+  color: #666;
+}
+
+.profile-page__orders {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.order-card {
+  background-color: #fafafa;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #eee;
+}
+
+.order-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.order-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.order-card__id {
+  font-weight: 600;
+  color: #333;
+  font-size: 16px;
+}
+
+.order-card__date {
+  color: #666;
+  font-size: 13px;
+}
+
+.order-card__status {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.order-card__status_pending {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.order-card__status_completed {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.order-card__status_cancelled {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.order-card__items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-item__info {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.order-item__name {
+  color: #333;
+}
+
+.order-item__quantity {
+  color: #666;
+  font-size: 14px;
+}
+
+.order-item__price {
+  font-weight: 500;
+  color: #333;
+}
+
+.order-card__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+}
+
+.order-card__total {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .profile-page__container {
+    flex-direction: column;
+  }
+
+  .profile-page__sidebar {
+    width: 100%;
+  }
+
+  .profile-page__section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .profile-page__detail {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .profile-page__detail-value {
+    text-align: left;
+  }
+}

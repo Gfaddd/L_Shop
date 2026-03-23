@@ -16,6 +16,22 @@ export interface User {
   phone: string;
   address: string;
   createdAt: string;
+  orderHistory: Order[];
+}
+
+export interface OrderItem {
+  productId: string;
+  quantity: number;
+  price: number;
+}
+
+export interface Order {
+  id: string;
+  userId: string;
+  items: OrderItem[];
+  totalAmount: number;
+  status: 'pending' | 'completed' | 'cancelled';
+  createdAt: string;
 }
 
 export interface BasketItem {

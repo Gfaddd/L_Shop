@@ -18,6 +18,8 @@ router.post('/api/users', usersController.createUser);
 router.post('/api/users/login', usersController.login);
 router.put('/api/users/:id', usersController.updateUser);
 router.delete('/api/users/:id', usersController.deleteUser);
+router.post('/api/users/:id/orders', usersController.addOrder);
+router.get('/api/users/:id/orders', usersController.getOrderHistory);
 
 router.get('/api/basket/:userId', basketController.getBasketByUserId);
 router.post('/api/basket/:userId/items', basketController.addItemToBasket);

@@ -1,12 +1,16 @@
-import type { CartItem } from "./cart";
+import type { Product } from "./product";
+
+export interface OrderItem {
+  productId: string;
+  product?: Product;
+  quantity: number;
+  price: number;
+}
+
 export interface Order {
   id: string;
   userId: string;
-  items: CartItem[];
-  deliveryAddress: string;
-  phone: string;
-  email: string;
-  paymentMethod: string;
+  items: OrderItem[];
   totalAmount: number;
   status: 'pending' | 'completed' | 'cancelled';
   createdAt: string;

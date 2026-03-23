@@ -23,6 +23,7 @@ export const Header: React.FC = () => {
 
     const handleStorageChange = () => {
       const currentUser = usersApi.getCurrentUser();
+      setCurrentUser(currentUser);
       if (currentUser?.id) {
         loadCartCount(currentUser.id);
       }
@@ -62,9 +63,18 @@ export const Header: React.FC = () => {
     }
   };
 
+  const handleProfileClick = (): void => {
+    if (!currentUser) {
+      setIsAuthOpen(true);
+    } else {
+      navigate('/profile');
+    }
+  };
+
   const handleLogout = (): void => {
     usersApi.logout();
     setCurrentUser(null);
+    navigate('/');
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,13 +94,10 @@ export const Header: React.FC = () => {
       currentParams.delete('maxPrice');
       currentParams.delete('inStock');
       setSearchParams(currentParams);
-      if (window.location.pathname !== '/') {
-        navigate('/');
-      }
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [searchValue, searchParams, setSearchParams, navigate]);
+  }, [searchValue, searchParams, setSearchParams]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -99,7 +106,7 @@ export const Header: React.FC = () => {
   return (
     <header className="header">
       <div className="header__container">
-        <div className="header__logo">
+        <div className="header__logo" onClick={() => navigate('/')}>
           <span>L-Shop</span>
         </div>
         
@@ -116,12 +123,15 @@ export const Header: React.FC = () => {
         <div className="header__actions">
           {currentUser ? (
             <>
-              <button className="header__btn" onClick={handleLogout}>
-                <span>Выйти ({currentUser.name})</span>
+              <button className="header__btn" onClick={handleProfileClick}>
+                <span>Аккаунт</span>
               </button>
               <button className="header__btn header__btn_cart" onClick={handleCartClick}>
                 <span>Корзина</span>
                 {cartCount > 0 && <span className="header__cart-count">{cartCount}</span>}
+              </button>
+              <button className="header__btn header__btn_logout" onClick={handleLogout}>
+                <span>Выйти</span>
               </button>
             </>
           ) : (

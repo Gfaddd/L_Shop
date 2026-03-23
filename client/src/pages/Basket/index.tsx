@@ -12,6 +12,7 @@ export const BasketPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [currentUser, setCurrentUser] = useState<Omit<User, 'password'> | null>(null);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
 
   useEffect(() => {
     const user = usersApi.getCurrentUser();
@@ -69,6 +70,43 @@ export const BasketPage: React.FC = () => {
       window.dispatchEvent(new Event('cartUpdated'));
     } catch (err) {
       setError('Не удалось очистить корзину');
+    }
+  };
+
+  const handleCheckout = async () => {
+    if (!currentUser?.id || !basket || basket.items.length === 0) return;
+    
+    try {
+      setCheckoutLoading(true);
+      setError('');
+      
+      const totalAmount = basket.items.reduce((total, item) => {
+        const price = item.product?.price || 0;
+        return total + (price * item.quantity);
+      }, 0);
+
+      const orderData = {
+        items: basket.items.map(item => ({
+          productId: item.productId,
+          quantity: item.quantity
+        })),
+        totalAmount
+      };
+
+      const response = await usersApi.createOrder(currentUser.id, orderData);
+      
+      if (response.success) {
+        await basketApi.clearBasket(currentUser.id);
+        window.dispatchEvent(new Event('cartUpdated'));
+        alert('Заказ успешно оформлен!');
+        navigate('/profile');
+      } else {
+        setError(response.error || 'Не удалось оформить заказ');
+      }
+    } catch (err) {
+      setError('Не удалось оформить заказ');
+    } finally {
+      setCheckoutLoading(false);
     }
   };
 
@@ -180,8 +218,12 @@ export const BasketPage: React.FC = () => {
               <span>Итого:</span>
               <span>{getTotalPrice()} ₽</span>
             </div>
-            <button className="basket-page__checkout">
-              Оформить заказ
+            <button 
+              className="basket-page__checkout"
+              onClick={handleCheckout}
+              disabled={checkoutLoading}
+            >
+              {checkoutLoading ? 'Оформление...' : 'Оформить заказ'}
             </button>
             <button className="basket-page__clear" onClick={handleClearBasket}>
               Очистить корзину

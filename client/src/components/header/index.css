@@ -21,6 +21,12 @@
   font-weight: 700;
   color: #333;
   min-width: 100px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.header__logo:hover {
+  opacity: 0.8;
 }
 
 .header__search {
@@ -78,4 +84,15 @@
   font-weight: 600;
   min-width: 18px;
   text-align: center;
+}
+
+.header__btn_logout {
+  background-color: #ff4444;
+  color: white;
+  border-color: #ff4444;
+}
+
+.header__btn_logout:hover {
+  background-color: #e63636;
+  border-color: #e63636;
 }

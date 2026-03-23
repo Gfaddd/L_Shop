@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Header } from '../../components/header';
 import { ProductCard } from '../../components/product-card';
 import { productsApi, type ProductQueryParams } from '../../api/products.api';
 import type { Product } from '../../types/product';
@@ -88,8 +87,6 @@ export const Home: React.FC = () => {
 
   return (
     <div className="home">
-      <Header />
-      
       <main className="home__main">
         <aside className="home__sidebar">
           <div className="home__filters">

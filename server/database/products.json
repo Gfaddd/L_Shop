@@ -6,7 +6,7 @@
     "price": 2990,
     "category": "Матрасы",
     "inStock": true,
-    "image": "https://example.com/images/mattress1.jpg"
+    "image": "images/wave.jpg"
   },
   {
     "id": "2",
@@ -15,7 +15,7 @@
     "price": 890,
     "category": "Круги",
     "inStock": true,
-    "image": "https://example.com/images/circle1.jpg"
+    "image": "images/sea.jpg"
   },
   {
     "id": "3",
@@ -24,7 +24,7 @@
     "price": 8990,
     "category": "Бассейны",
     "inStock": true,
-    "image": "https://example.com/images/pool1.jpg"
+    "image": "images/pool305.jpg"
   },
   {
     "id": "4",
@@ -33,7 +33,7 @@
     "price": 1490,
     "category": "Оружие водное",
     "inStock": false,
-    "image": "https://example.com/images/gun1.jpg"
+    "image": "images/pistol.jpg"
   },
   {
     "id": "5",
@@ -42,7 +42,7 @@
     "price": 4990,
     "category": "Лодки",
     "inStock": true,
-    "image": "https://example.com/images/boat1.jpg"
+    "image": "images/boat.jpg"
   },
   {
     "id": "6",
@@ -51,7 +51,7 @@
     "price": 590,
     "category": "Аксессуары",
     "inStock": true,
-    "image": "https://example.com/images/glasses1.jpg"
+    "image": "images/glasses.jpg"
   },
   {
     "id": "7",
@@ -60,7 +60,7 @@
     "price": 390,
     "category": "Аксессуары",
     "inStock": true,
-    "image": "https://example.com/images/fins1.jpg"
+    "image": "images/lasti.jpg"
   },
   {
     "id": "8",
@@ -69,7 +69,7 @@
     "price": 12990,
     "category": "Плоты",
     "inStock": false,
-    "image": "https://example.com/images/raft1.jpg"
+    "image": "images/plot.jpg"
   },
   {
     "id": "9",
@@ -78,7 +78,7 @@
     "price": 1890,
     "category": "Аксессуары",
     "inStock": true,
-    "image": "https://example.com/images/vest1.jpg"
+    "image": "images/jelet.jpg"
   },
   {
     "id": "10",
@@ -87,6 +87,6 @@
     "price": 490,
     "category": "Аксессуары",
     "inStock": true,
-    "image": "https://example.com/images/pillow1.jpg"
+    "image": "images/podushka.jpg"
   }
 ]
