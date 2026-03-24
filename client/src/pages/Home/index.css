@@ -112,6 +112,42 @@
   color: #666;
 }
 
+.home__sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.home__sort {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.home__sort label {
+  font-size: 14px;
+  color: #666;
+}
+
+.home__sort select {
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.home__sort select:hover {
+  border-color: #999;
+}
+
+.home__sort select:focus {
+  outline: none;
+  border-color: #4a90d9;
+}
+
 .home__products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

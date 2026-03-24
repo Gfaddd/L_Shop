@@ -41,6 +41,25 @@ export const getProductsWithFilters = (params: ProductQueryParams): { products: 
     );
   }
 
+  // Сортировка
+  if (params.sortBy) {
+    const sortField = params.sortBy as keyof typeof products[0];
+    const sortOrder = params.sortOrder === 'desc' ? -1 : 1;
+    
+    products = [...products].sort((a, b) => {
+      const aVal = a[sortField];
+      const bVal = b[sortField];
+      
+      if (typeof aVal === 'string' && typeof bVal === 'string') {
+        return aVal.localeCompare(bVal) * sortOrder;
+      }
+      if (typeof aVal === 'number' && typeof bVal === 'number') {
+        return (aVal - bVal) * sortOrder;
+      }
+      return 0;
+    });
+  }
+
   const total = products.length;
 
   const page = params.page || 1;

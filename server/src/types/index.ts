@@ -47,6 +47,9 @@ export interface Basket {
   updatedAt: string;
 }
 
+export type SortField = 'price' | 'name' | 'createdAt';
+export type SortOrder = 'asc' | 'desc';
+
 export interface ProductQueryParams {
   category?: string | string[];
   minPrice?: number;
@@ -55,6 +58,8 @@ export interface ProductQueryParams {
   search?: string;
   page?: number;
   limit?: number;
+  sortBy?: SortField;
+  sortOrder?: SortOrder;
 }
 
 export interface ApiResponse<T> {
