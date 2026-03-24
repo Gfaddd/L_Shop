@@ -1,0 +1,92 @@
+[
+  {
+    "id": "1",
+    "name": "Надувной матрас 'Wave'",
+    "description": "Двухместный надувной матрас с подголовниками, высокое качество",
+    "price": 2990,
+    "category": "Матрасы",
+    "inStock": true,
+    "image": "images/wave.jpg"
+  },
+  {
+    "id": "2",
+    "name": "Круг надувной 'Sea'",
+    "description": "Диаметр 100 см, яркий дизайн, безопасный материал",
+    "price": 890,
+    "category": "Круги",
+    "inStock": true,
+    "image": "images/sea.jpg"
+  },
+  {
+    "id": "3",
+    "name": "Бассейн надувной 305 см",
+    "description": "Семейный бассейн с лестницей, вместимость 4678 литров",
+    "price": 8990,
+    "category": "Бассейны",
+    "inStock": true,
+    "image": "images/pool305.jpg"
+  },
+  {
+    "id": "4",
+    "name": "Водный пистолет 'Aqua Blast'",
+    "description": "С дальностью стрельбы до 8 метров, объем 500 мл",
+    "price": 1490,
+    "category": "Оружие водное",
+    "inStock": false,
+    "image": "images/pistol.jpg"
+  },
+  {
+    "id": "5",
+    "name": "Надувная лодка 'Dolphin'",
+    "description": "Для 2 человек, с веслами и насосом в комплекте",
+    "price": 4990,
+    "category": "Лодки",
+    "inStock": true,
+    "image": "images/boat.jpg"
+  },
+  {
+    "id": "6",
+    "name": "Очки для плавания",
+    "description": "Антизапотевающие, герметичные, с регулируемым ремешком",
+    "price": 590,
+    "category": "Аксессуары",
+    "inStock": true,
+    "image": "images/glasses.jpg"
+  },
+  {
+    "id": "7",
+    "name": "Ласты детские",
+    "description": "Размер S, яркие цвета, мягкий материал",
+    "price": 390,
+    "category": "Аксессуары",
+    "inStock": true,
+    "image": "images/lasti.jpg"
+  },
+  {
+    "id": "8",
+    "name": "Надувной плот 'River'",
+    "description": "Для 4 человек, с моторным креплением, усиленная конструкция",
+    "price": 12990,
+    "category": "Плоты",
+    "inStock": false,
+    "image": "images/plot.jpg"
+  },
+  {
+    "id": "9",
+    "name": "Жилет спасательный 'Safety'",
+    "description": "Взрослый размер, регулируется по объему, светоотражающие элементы",
+    "price": 1890,
+    "category": "Аксессуары",
+    "inStock": true,
+    "image": "images/jelet.jpg"
+  },
+  {
+    "id": "10",
+    "name": "Надувная подушка для шеи",
+    "description": "Универсальный размер, мягкий материал, в чехле",
+    "price": 490,
+    "category": "Аксессуары",
+    "inStock": true,
+    "image": "images/podushka.jpg"
+  }
+]
