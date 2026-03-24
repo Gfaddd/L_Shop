@@ -17,6 +17,7 @@ export const Home: React.FC = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<{ min: string; max: string }>({ min: '', max: '' });
   const [onlyInStock, setOnlyInStock] = useState(false);
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
   const searchFromUrl = searchParams.get('search') || '';
 
@@ -51,6 +52,9 @@ export const Home: React.FC = () => {
         params.inStock = true;
       }
       
+      params.sortBy = 'price';
+      params.sortOrder = sortOrder;
+      
       const response = await productsApi.getAll(params);
       setProducts(response.data);
       setTotalCount(response.total);
@@ -60,7 +64,7 @@ export const Home: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, [searchFromUrl, selectedCategories, priceRange, onlyInStock]);
+  }, [searchFromUrl, selectedCategories, priceRange, onlyInStock, sortOrder]);
 
   useEffect(() => {
     fetchProducts();
@@ -70,6 +74,7 @@ export const Home: React.FC = () => {
     setSelectedCategories([]);
     setPriceRange({ min: '', max: '' });
     setOnlyInStock(false);
+    setSortOrder('asc');
   };
 
   const handleCategoryChange = (category: string) => {
@@ -153,7 +158,19 @@ export const Home: React.FC = () => {
             <h1>
               {searchFromUrl ? `Результаты поиска: "${searchFromUrl}"` : 'Все товары'}
             </h1>
-            <span>Найдено: {totalCount} товаров</span>
+            <div className="home__sort-controls">
+              <span>Найдено: {totalCount} товаров</span>
+              <div className="home__sort">
+                <label>Сортировка по цене:</label>
+                <select 
+                  value={sortOrder}
+                  onChange={(e) => setSortOrder(e.target.value as 'asc' | 'desc')}
+                >
+                  <option value="asc">По возрастанию</option>
+                  <option value="desc">По убыванию</option>
+                </select>
+              </div>
+            </div>
           </div>
           
           {loading ? (

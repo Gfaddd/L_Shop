@@ -9,6 +9,8 @@ export interface ProductQueryParams {
   search?: string;
   page?: number;
   limit?: number;
+  sortBy?: 'price' | 'name' | 'createdAt';
+  sortOrder?: 'asc' | 'desc';
 }
 
 export interface ProductsResponse {

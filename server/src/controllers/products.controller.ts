@@ -11,7 +11,9 @@ export const getAllProducts = (req: Request, res: Response): void => {
       inStock: req.query.inStock ? req.query.inStock === 'true' : undefined,
       search: req.query.search as string,
       page: req.query.page ? Number(req.query.page) : 1,
-      limit: req.query.limit ? Number(req.query.limit) : 10
+      limit: req.query.limit ? Number(req.query.limit) : 10,
+      sortBy: req.query.sortBy as 'price' | 'name' | 'createdAt' | undefined,
+      sortOrder: req.query.sortOrder as 'asc' | 'desc' | undefined
     };
 
     const { products, total } = productsService.getProductsWithFilters(params);
